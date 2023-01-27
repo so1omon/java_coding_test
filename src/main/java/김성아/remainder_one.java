@@ -1,4 +1,4 @@
-package programmers;
+package 김성아;
 
 public class remainder_one {
     static int div_num=0;

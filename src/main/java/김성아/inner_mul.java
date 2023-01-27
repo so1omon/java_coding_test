@@ -1,4 +1,4 @@
-package programmers;
+package 김성아;
 
 public class inner_mul {
     public int solution(int[] a, int[] b) {

@@ -1,4 +1,4 @@
-package programmers;
+package 김성아;
 
 public class new_id_rec {
     public static String solution(String new_id) {

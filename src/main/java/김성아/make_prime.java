@@ -1,4 +1,4 @@
-package programmers;
+package 김성아;
 import java.util.*;
 public class make_prime {
     public static int[] solution(String today, String[] terms, String[] privacies) {

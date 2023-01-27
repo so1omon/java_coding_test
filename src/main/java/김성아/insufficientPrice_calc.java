@@ -1,4 +1,4 @@
-package programmers;
+package 김성아;
 
 public class insufficientPrice_calc {
     public long solution(int price, int money, int count) {

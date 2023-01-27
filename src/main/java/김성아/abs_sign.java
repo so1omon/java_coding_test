@@ -1,4 +1,4 @@
-package programmers;
+package 김성아;
 
 public class abs_sign {
     public int solution(int[] absolutes, boolean[] signs) {

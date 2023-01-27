@@ -1,4 +1,4 @@
-package programmers;
+package 김성아;
 
 public class divisor_cnt_add {
     public static int solution(int left, int right) {
