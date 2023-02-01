@@ -1,0 +1,10 @@
+.idea
+.idea/*.xml
+*.iml
+*.xml
+/build
+/build/*
+/out
+/out/*
+/gen
+/gen/*
