@@ -1,15 +1,19 @@
 package 김솔민;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 
 class Test {
     public static void main(String[] args) {
-        String testStr = "awefAawefaw-";
+        List<Integer> list = Arrays.asList(1,2,3,232,12,459);
+        System.out.println("list = " + list);
 
-        testStr = testStr.replaceAll("[^-_.a-z0-9]","");
+        list.sort(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
 
-        System.out.println(testStr);
-
+        System.out.println("list = " + list);
     }
 }
