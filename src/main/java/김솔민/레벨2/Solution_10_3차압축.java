@@ -12,6 +12,12 @@ import java.util.Map;
  *
  *
  * <Memo>
+ *   Character -> String 형변환
+ *      단일 character일 때 : Character.toString(ch);
+ *      character 배열일 때 : String.valueOf(charray);
+ *   List -> Array 전환
+ *      List<Integer> list = new ArrayList<>();
+ *      list.stream().mapToInt(Integer::intValue).toArray();
  * </Memo>
  */
 class Solution_10_3차압축 {
