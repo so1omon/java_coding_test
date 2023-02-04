@@ -4,16 +4,10 @@ import java.util.*;
 
 class Test {
     public static void main(String[] args) {
-//        List<Integer> list = Arrays.asList(1,2,3,232,12,459);
-//        System.out.println("list = " + list);
-//
-//        list.sort(new Comparator<Integer>() {
-//            @Override
-//            public int compare(Integer o1, Integer o2) {
-//                return o1 - o2;
-//            }
-//        });
-//
-//        System.out.println("list = " + list);
+        List<Map.Entry<String, String>> newList = new ArrayList<>();
+
+        newList.add(Map.entry("waefew","aefaewf"));
+
+        System.out.println("newList = " + newList);
     }
 }
