@@ -4,10 +4,21 @@ import java.util.*;
 
 class Test {
     public static void main(String[] args) {
-        List<Map.Entry<String, String>> newList = new ArrayList<>();
+        List<Integer> temp  = new ArrayList<>(){{
+            add(1);
+            add(2);
+            add(3);
+            add(4);
+            add(5);
+        }};
 
-        newList.add(Map.entry("waefew","aefaewf"));
+        for(int i=0;i<5;i++){
+            System.out.println(temp.get(i));
+        }
 
-        System.out.println("newList = " + newList);
+
+
+
+
     }
 }
