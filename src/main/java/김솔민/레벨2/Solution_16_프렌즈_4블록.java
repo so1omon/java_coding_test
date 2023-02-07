@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * https://school.programmers.co.kr/learn/courses/30/lessons/42587
  * Solution using
- * YYYY/MM/DD
+ * 2023/02/05
  *
  *
  * <Memo>
