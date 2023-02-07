@@ -14,7 +14,7 @@ import java.util.*;
  * </Memo>
  */
 
-class Solution_17_3차_파일명_정렬_실패_stable정렬_적용후성공 {
+class Solution_18_3차_파일명_정렬_실패_stable정렬_적용후성공 {
     public String[] solution(String[] files) {
         String[] answer = new String[files.length];
 
@@ -75,7 +75,7 @@ class Solution_17_3차_파일명_정렬_실패_stable정렬_적용후성공 {
                     return -1;
                 }
 
-                return 1;
+                return 0;
             }
         });
 
@@ -108,6 +108,6 @@ class Solution_17_3차_파일명_정렬_실패_stable정렬_적용후성공 {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Solution_17_3차_파일명_정렬_실패_stable정렬_적용후성공().solution(new String[]{"img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG"}));
+        System.out.println(new Solution_18_3차_파일명_정렬_실패_stable정렬_적용후성공().solution(new String[]{"img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG"}));
     }
 }
