@@ -1,8 +1,28 @@
-package 김솔민;
-
+package 김솔민.레벨2;
 import java.util.*;
-
-class Test {
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/42587
+ * Solution using
+ * 2023/02/08
+ *
+ *
+ * <Memo>
+ *   combination 돌리는 전략
+ *      1. Object : 조합 돌리려는 대상 객체
+ *      2. depth(초기값:뽑을 수): 현재까지 뽑은 갯수, 조합 시 하나씩 줄여나가기
+ *      3. r : 현재 인덱스
+ *      4. n : Object의 길이
+ *      5. depth==0이면 무조건 다 뽑았다고 판단하고 로직 실행
+ *      6. r이 n을 벗어나는 값으로 바뀌면 리턴
+ *      7. 로직실행
+ *          7-1. r번째 요소를 뽑지 않았을 때의 재귀함수 실행
+ *          7-2. r번째 요소를 뽑았을 때의 재귀함수 실행
+ *
+ *   Collections.max(min) 함수 사용 시 주의점:
+ *      Collection이 비었으면 에러 반환함
+ * </Memo>
+ */
+class Solution_20_메뉴_리뉴얼 {
     public String[] solution(String[] orders, int[] course) {
         List<String> list = new ArrayList<>();
         // 0. course 돌기
@@ -17,15 +37,15 @@ class Test {
                 // String temp, int n, int r, int depth){
                 comb(menus, order, "", order.length(), 0, c);
             }
-            for(Map.Entry<String, Integer> entry : menus.entrySet()){
-                System.out.println("조합: "+entry.getKey() + " 개수 : "+entry.getValue());
-            }
 
             // 3. value의 최댓값 구하고, 2 이하면 끝
+            if(menus.size()==0){
+                continue;
+            }
+
             Integer maxValue =  Collections.max(menus.values());
 
-
-            if(maxValue<=2){
+            if(maxValue<2){
                 continue;
             }
             // 3-1. Map을 순회하면서 value로 최댓값을 가지는 애들을 전부 다 result에 넣기
@@ -56,6 +76,9 @@ class Test {
     void comb(Map<String, Integer> map, String target,
               String temp, int n, int r, int depth){
         if(depth==0){
+            char[] charr = temp.toCharArray();
+            Arrays.sort(charr);
+            temp = String.valueOf(charr);
             map.put(temp, map.getOrDefault(temp, 0)+1);
             return;
         }
@@ -68,14 +91,8 @@ class Test {
         comb(map, target, temp, n, r+1, depth-1);
 
     }
+
     public static void main(String[] args) {
-//        System.out.println(new Test().solution("CBD", new String[]{"BACDE", "CBADF", "AECB", "BDA"}));
-        String[] orders = {"XYZ", "XWY", "WXA"};
-        int[] course = {2,3,4};
-
-        System.out.println(new Test().solution(orders, course));
-
-
 
     }
 }
