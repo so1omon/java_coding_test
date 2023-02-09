@@ -8,6 +8,6 @@
 /out/*
 /gen
 /gen/*
-
-
+.gradle/
+.gradle/*
 Test.java
