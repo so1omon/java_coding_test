@@ -1,7 +1,7 @@
 package 김성아;
 
 import java.util.*;
-public class parentheses_rotation {
+public class parenthesis_rotation {
     public int solution(String s) {
         int answer = 0;
         char ch;
