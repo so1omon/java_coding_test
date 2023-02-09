@@ -69,12 +69,9 @@ class Test {
 
     }
     public static void main(String[] args) {
-//        System.out.println(new Test().solution("CBD", new String[]{"BACDE", "CBADF", "AECB", "BDA"}));
-        String[] orders = {"XYZ", "XWY", "WXA"};
-        int[] course = {2,3,4};
-
-        System.out.println(new Test().solution(orders, course));
-
+        String a = "123";
+        System.out.println(a.substring(3));
+        Stack<Integer> stack = new Stack<>();
 
 
     }
