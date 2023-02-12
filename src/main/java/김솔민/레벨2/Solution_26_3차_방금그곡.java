@@ -7,6 +7,8 @@ import java.util.*;
  *
  *
  * <Memo>
+ *   Stringbuilder 길이 : sb.length();
+ *   Stringbuilder 초기화 : sb.delete(0, sb.length());
  * </Memo>
  */
 class Solution_26_3차_방금그곡 {
