@@ -7,6 +7,10 @@ import java.util.*;
  *
  *
  * <Memo>
+ *   리스트에서 특정 조건을 만족하는 요소 제거 : [List].removeIf([Lambda])
+ *   리스트에서 특정 조건을 만족하는 요소 추출 : [List].steam()
+ *                                         .filter([Lambda])
+ *                                         .collect(Collectors.toList());
  * </Memo>
  */
 class Solution_28_후보키 {
