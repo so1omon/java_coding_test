@@ -9,7 +9,7 @@ import java.util.*;
  * <Memo>
  * </Memo>
  */
-class Practice_1_연속_부분_수열_합의_개수 {
+class Practice_01_연속_부분_수열_합의_개수 {
     public int solution(int[] elements) {
         Set<Integer> set = new HashSet<>();
 
