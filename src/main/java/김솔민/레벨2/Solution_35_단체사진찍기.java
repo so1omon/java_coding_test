@@ -10,176 +10,84 @@ import java.util.*;
  * </Memo>
  */
 class Solution_35_단체사진찍기 {
-    int answer;
-    Map<String, List<Integer>> map = new HashMap<>();
+    static int answer;
+    static Map<String, List<Integer>> map;
+    static String friends;
 
     public int solution(int n, String[] data) {
-        answer= 0;
-        // 1. 각각의 프렌즈들에 대한 간격 정보를 담고 있는 Map<String, List<Integer>> 생성
-        // 1-1. List 초기값은 0,1,2,3,4,5,6 (2명 사이의 사람들 수이므로)
-
-
-        // 2. 각각의 data를 파싱해서 Map 조건 추가
-        // 2-1. Map 안의 List가 비게 된다면 즉시 solution 종료 (return 0)
-        // 2-2. Couple 프렌즈 정보를 정렬해서 String으로 담기
+        answer = 0;
+        map = new HashMap<>();
+        friends="ACFJMNRT";
         for(String d : data){
-            char[] splitted = d.toCharArray();
-            String couple = "";
+            char[] splitted = d.toCharArray(); //"N ~ F = 0",
+            String key = "";
             if(splitted[0]>splitted[2]){
-                couple += splitted[0];
-                couple += splitted[2];
+                key +=splitted[0];
+                key +=splitted[2];
             }else{
-                couple += splitted[2];
-                couple += splitted[0];
+                key +=splitted[2];
+                key +=splitted[0];
             }
 
-            List<Integer> possible =
-                map.getOrDefault(couple, new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6)));
-
-            int targetNum = splitted[4]-'0';
+            List<Integer> pool = map.getOrDefault(key, new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6)));
+            int target = splitted[4] - '0';
             switch(splitted[3]){
                 case '=':
-                    possible.removeIf(friend->(
-                        friend!=targetNum
-                    ));
-                    break;
-                case '>':
-                    possible.removeIf(friend->(
-                        friend<=targetNum
-                    ));
+                    pool.removeIf(elem -> (elem!=target));
                     break;
                 case '<':
-                    possible.removeIf(friend->(
-                        friend>=targetNum
-                    ));
+                    pool.removeIf(elem -> (elem>=target));
+                    break;
+                case '>':
+                    pool.removeIf(elem -> (elem<=target));
                     break;
                 default:
                     break;
             }
-            if(possible.size()==0){
+
+            if(pool.isEmpty()){
                 return 0;
-            }else{
-                map.put(couple, possible);
             }
+
+            map.put(key, pool);
         }
 
-        // 3. 전체 경우의 수에서 Map 안의 조건들을 하나씩 선택하면서 경우의 수 뺴기
-
-        String[] keyArr = map.keySet().toArray(new String[map.size()]);
-        Couple[] coupleList = new Couple[map.size()];
-        dfs(keyArr, keyArr.length, 0, coupleList);
+        comb(0, 8, new char[8], new boolean[8]);
 
         return answer;
     }
 
-
-    void dfs(String[] keyArr, int n, int depth, Couple[] coupleList){
+    // r : 현재 위치
+    void comb(int depth, int n, char[] frinedsArr, boolean[] visited){
+        // 탈출 조건 : depth==n
         if(depth==n){
-            allCase(coupleList, 0, coupleList.length, "        ".toCharArray());
-            return;
-        }
-        List<Integer> targetList = map.get(keyArr[depth]);
+            // 이때부터 조건 check 시작
+            for(String key : map.keySet()){
+                String friendStr = String.valueOf(frinedsArr);
+                // key.charAt(0)과 key.charAt(1)의 거리를 측정
+                int idxDif = Math.abs(friendStr.indexOf(key.charAt(0)) - friendStr.indexOf(key.charAt(1)))-1;
 
-        for(int i=0;i<targetList.size();i++){
-            coupleList[depth] = new Couple(keyArr[depth], targetList.get(i));
-            dfs(keyArr, n, depth+1, coupleList);
-        }
-    }
-
-    // depth : 탐색 수
-    // n : coupleList 크기
-    void allCase(Couple[] coupleList, int depth, int n, char[] slot){
-
-        // 탈출조건
-        if(depth==n){
-            int total = 1;
-            int empties = findEmptyAreas(slot);
-            while(empties>1){
-                total*=empties--;
-            }
-            answer+=total;
-            return;
-        }
-
-        Couple targetCouple = coupleList[depth];
-        int target;
-        int foundIdx = indexOfArr(slot, targetCouple.friends[0]);
-        target = 1;
-        if(foundIdx==-1){
-            foundIdx = indexOfArr(slot, targetCouple.friends[1]);
-            target = 0;
-        }
-        // 만약 slot에서 찾으면 그 자리에서 두 가지 경우 실행
-        // 그렇지 않으면 empty slot에 대해 모두 실행
-        if(foundIdx==-1){ // empty slot들에 대해 실행
-            for(int i=0;i<8;i++){
-                if(slot[i]==' '){
-                    slot[i] = targetCouple.friends[0];
-                    int leftIdx = i + targetCouple.distance+1;
-                    int rightIdx = i - targetCouple.distance-1;
-                    if(leftIdx <8 && slot[leftIdx]==' '){
-                        slot[leftIdx] = targetCouple.friends[1];
-                        allCase(coupleList, depth+1, n, slot);
-                        slot[leftIdx] = ' ';
-                    }
-                    if(rightIdx >=0 && slot[rightIdx]==' '){
-                        slot[rightIdx] = targetCouple.friends[1];
-                        allCase(coupleList, depth+1, n, slot);
-                        slot[rightIdx] = ' ';
-                    }
-                    slot[i] = ' ';
+                // 만약 두 거리가 map.get(key) 배열 안에 있을 경우 answer++
+                if(!map.get(key).contains(idxDif)){
+                    return;
                 }
             }
-        }else{ // 찾았을때
-            int leftIdx = foundIdx + targetCouple.distance+1;
-            int rightIdx = foundIdx - targetCouple.distance-1;
+            answer++;
 
-            if(leftIdx <8 && slot[leftIdx]==' '){
-                slot[leftIdx] = targetCouple.friends[target];
-                allCase(coupleList, depth+1, n, slot);
-                slot[leftIdx] = ' ';
-            }
-            if(rightIdx >=0 && slot[rightIdx]==' '){
-                slot[rightIdx] = targetCouple.friends[target];
-                allCase(coupleList, depth+1, n, slot);
-                slot[rightIdx] = ' ';
+        }else {
+            for (int i = 0; i < 8; i++) {
+                if (visited[i]) continue;
+                visited[i] = true;
+                frinedsArr[depth] = friends.charAt(i);
+                comb(depth+1, n, frinedsArr, visited);
+                visited[i] = false;
             }
         }
-
-    }
-
-    class Couple{
-        char[] friends = new char[2];
-        int distance;
-
-        Couple(String c, int d){
-            this.distance = d;
-            this.friends = c.toCharArray();
-        }
-    }
-
-    int indexOfArr(char[] arr, char c){
-        for(int i=0;i<arr.length;i++){
-            if(arr[i] == c){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    int findEmptyAreas(char[] arr){
-        int empties = 0;
-        for(int i=0;i<arr.length;i++){
-            if(arr[i] == ' '){
-                empties++;
-            }
-        }
-        return empties;
     }
 
     public static void main(String[] args) {
         int n = 2;
-        String[] data = {"A~C=0", "C~F=0","F~J=0"};
+        String[] data = {"N~F=0", "R~T>2"};
         System.out.println(new Solution_35_단체사진찍기().solution(n, data));
     }
 }
