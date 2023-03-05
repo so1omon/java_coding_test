@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * https://school.programmers.co.kr/learn/courses/30/lessons/42587
+ * https://school.programmers.co.kr/learn/courses/30/lessons/131128
  * Solution using StringBuilder()
  * 2023/01/26
  *

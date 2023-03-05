@@ -9,7 +9,7 @@ import java.util.*;
  * <Memo>
  * </Memo>
  */
-class Practice_05_뒤에있는_큰수찾기_나중에다시풀기 {
+class Practice_05_뒤에있는_큰수찾기 {
   public int[] solution(int[] numbers) {
     int[] answer = new int[numbers.length];
 

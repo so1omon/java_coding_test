@@ -11,7 +11,7 @@ import java.util.*;
  * <Memo>
  * </Memo>
  */
-class Solution_11_retry {
+class Solution_11 {
     public int[] solution(String[] id_list, String[] report, int k) {
         // 1. report 중복 제거
         HashSet<String> reportNotDup = new HashSet<>();
@@ -56,7 +56,7 @@ class Solution_11_retry {
 
     public static void main(String[] args) {
 
-        Solution_11_retry solution11MyAnswer = new Solution_11_retry();
+        Solution_11 solution11MyAnswer = new Solution_11();
         String[] id_list = {"muzi", "frodo", "apeach", "neo"};
         String[] report = {"muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"};
         int k = 2;
