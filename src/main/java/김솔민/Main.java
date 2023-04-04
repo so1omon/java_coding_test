@@ -12,23 +12,20 @@ public class Main {
             this.weight = args[2];
         }
     }
-
-
+    String[] t = {
+        "awfawe",
+        "ewafawef"
+    };
+    String test = String.valueOf(t);
 
     public static void main(String[] args) {
         // example graph
-        Edge[] edges = {
-            new Edge(0, 1, 2),
-            new Edge(0, 3, 6),
-            new Edge(1, 2, 3),
-            new Edge(1, 3, 8),
-            new Edge(1, 4, 5),
-            new Edge(2, 4, 7),
-            new Edge(3, 4, 9)
+        String[] t = {
+            "awfawe",
+            "ewafawef"
         };
-        int n = 5;
-
-        kruskalMST(edges, n);
+        String test = String.join(" ",t);
+        System.out.println(test);
     }
 
     private static void kruskalMST(Edge[] edges, int n) {
