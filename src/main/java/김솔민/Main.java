@@ -3,73 +3,106 @@ import java.io.*;
 import java.util.*;
 import java.io.*;
 
+import java.util.*;
+
 public class Main {
-    static class Edge{
-        int source, dest, weight;
-        Edge(int... args){
-            this.source = args[0];
-            this.dest = args[1];
-            this.weight = args[2];
+
+    public int solution(String word, String[] pages) {
+        int answer = 0;
+        double maxValue = 0.0;
+        Map<String, Html> map = new HashMap<>();
+        Matcher url_matcher, word_matcher, home_url_matcher;
+        Pattern home_url_pattern = Pattern.compile("<meta property=\"og:url\" content=\"(\\S*)\"");
+        Pattern url_pattern = Pattern.compile("<a href=\"https://(\\S*)\"");
+        Pattern word_pattern = Pattern.compile("\\b(?i)"+word+"\\b");
+
+
+        for(int i=0;i<pages.length;i++){
+            String page = pages[i];
+            url_matcher = url_pattern.matcher(page);
+            String home_url = "";
+            home_url_matcher = home_url_pattern.matcher(pages[i]);
+
+            List<String> ext_urls = new ArrayList<>();
+            while(url_matcher.find()) {
+                ext_urls.add(url_matcher.group().split("\"")[1]);
+            }
+
+            if(home_url_matcher.find()){
+                home_url = home_url_matcher.group().split("=")[2].replaceAll("\"", "");
+            }
+
+            Html html = new Html(page, word, i, home_url, ext_urls);
+            map.put(html.link, html);
         }
-    }
-    String[] t = {
-        "awfawe",
-        "ewafawef"
-    };
-    String test = String.valueOf(t);
 
-    public static void main(String[] args) {
-        // example graph
-        String[] t = {
-            "awfawe",
-            "ewafawef"
-        };
-        String test = String.join(" ",t);
-        System.out.println(test);
-    }
+        for(String key : map.keySet()){
+            Html html = map.get(key);
 
-    private static void kruskalMST(Edge[] edges, int n) {
-        Arrays.sort(edges, (e1, e2)->{
-            return e1.weight-e2.weight;
+            for(String outerLink : html.outerLinks){
+                if(map.containsKey(outerLink)){
+                    map.get(outerLink).linked.add(html.link);
+                }
+            }
+        }
+        List<String> newKeys = new ArrayList<>(map.keySet());
+        newKeys.sort((a,b)->{
+            return map.get(a).idx - map.get(b).idx;
         });
 
-        int[] parent = new int[n];
-        Arrays.fill(parent, -1);
+        for(String key : newKeys){
+            Html html = map.get(key);
 
-        List<Edge> mst = new ArrayList<>();
-
-        int count = 0;
-        for(Edge edge : edges){
-            int srcParent = find(parent, edge.source);
-            int destParent = find(parent, edge.dest);
-
-            if(srcParent!=destParent){
-                mst.add(edge);
-                union(parent, srcParent, destParent);
-                count++;
+            double temp = 0.0;
+            for(String linkedLink : html.linked){
+                temp += map.get(linkedLink).linkValue;
             }
 
-            if(count==n-1){
-                break;
+            temp += (double)html.value;
+
+
+            if(maxValue<temp){
+                maxValue = temp;
+                answer = html.idx;
             }
         }
 
-        System.out.println("Minimum Spanning Tree:");
-        for (Edge edge : mst) {
-            System.out.println(edge.source + " - " + edge.dest);
+
+        return answer;
+    }
+    class Html{
+        String link;
+        double value;
+        double linkValue;
+        int idx;
+        List<String> outerLinks = new ArrayList<>();
+        List<String> linked = new ArrayList<>();
+
+        Html(String html, String comp, int idx, String home_url, List<String> ol){
+            String body = html.split("<body>")[1].split("</body>")[0].replaceAll("[0-9]", " ");
+            this.idx = idx;
+            this.value = (int)countMatch(body, comp);
+            this.link = home_url;
+            this.outerLinks = ol;
+            this.linkValue = value/outerLinks.size();
         }
 
     }
-    static void union(int[] parent, int source, int dest){
-        parent[source] = dest;
-    }
 
-    static int find(int[] parent, int v){
-        if(parent[v]==-1){
-            return v;
+    int countMatch(String origin, String comp){
+        int cnt = 0;
+        origin = origin.toLowerCase();
+        comp = comp.toLowerCase();
+
+        String newOrigin = origin.replaceAll("[^a-zA-z]", " ");
+        String[] split = newOrigin.split(" ");
+
+        for(String s : split){
+            if(s.equals(comp)){
+                cnt++;
+            }
         }
-        return find(parent, parent[v]);
+        return cnt;
     }
-
 
 }

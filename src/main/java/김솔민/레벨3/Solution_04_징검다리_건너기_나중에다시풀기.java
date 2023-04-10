@@ -1,7 +1,7 @@
 package 김솔민.레벨3;
 
 /**
- * https://school.programmers.co.kr/learn/courses/30/lessons/42587
+ * https://school.programmers.co.kr/learn/courses/30/lessons/64062
  * Solution using Binary Search
  * 2023/03/03
  *
